@@ -1,5 +1,6 @@
 ﻿using Calcul;
 using DotNetty.Transport.Channels;
+using FluentAssertions;
 
 namespace CalculTest
 {
@@ -24,6 +25,7 @@ namespace CalculTest
             // Action
             int resultat = service.addition(a, b);
             // Assert
+            resultat.Should().Be(expected);
             Assert.Equal(expected, resultat);
         }
 
@@ -38,7 +40,9 @@ namespace CalculTest
             // Action
             var resultat = service.soustration(a, b);
             // Assert
-            Assert.Equal(expected, resultat);
+            // using FluentAssert
+            resultat.Should().Be(expected); 
+            //Assert.Equal(expected, resultat);
         }
 
 
@@ -52,7 +56,8 @@ namespace CalculTest
             // Action
             var resultat = service.Mulitiplication(a, b);
             // Assert
-            Assert.Equal(expected, resultat);
+            resultat.Should().Be(expected);
+          //  Assert.Equal(expected, resultat);
         }
 
 
@@ -65,7 +70,8 @@ namespace CalculTest
             // Action
             var resultat = service.division(a, b);
             // Assert
-            Assert.Equal(expected, resultat);
+            resultat.Should().Be(expected);
+          //  Assert.Equal(expected, resultat);
         }
 
         [Fact]
@@ -73,7 +79,9 @@ namespace CalculTest
         {
             // Arrange => preparer mon environnement de travail
             // Action
-            Assert.Throws<DivideByZeroException>(() => service.division(10, 0));
+            Action action = () => service.division(10, 0);
+             action.Should().Throw<DivideByZeroException>();
+           // Assert.Throws<DivideByZeroException>(() => service.division(10, 0));
             // Assert
 
         }
